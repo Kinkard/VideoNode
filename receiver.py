@@ -1,16 +1,16 @@
 import paho.mqtt.client as mqtt
 
 client = mqtt.Client("box")
-client.connect("192.168.1.23")
 
-counter = 0 # input messages counter
-def on_message(client, userdata, message):
-    counter += 1
-    print(counter)
+def process_video_upload(client, userdata, message):
+    print("Hue!")
     #print("message received " ,str(message.payload.decode("utf-8")))
-    #print("message topic=",message.topic)
+    print("message topic=",message.topic)
     #print("message qos=",message.qos)
 
-client.subscribe("device/video")
-client.on_message=on_message
+# register all callbacks during initialisation
+client.message_callback_add("device/video", process_video_upload)
+
+client.connect("192.168.1.23")
+client.subscribe("device/#")
 client.loop_forever()
