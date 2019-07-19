@@ -1,7 +1,8 @@
 import paho.mqtt.client as mqtt
+import paramiko
 
 def process_video(client, userdata, message):
-    print(message.payload)
+    print(str(message.payload, 'utf-8'))
 
 # set up MQTT communication
 client = mqtt.Client("box")
