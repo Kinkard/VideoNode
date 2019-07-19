@@ -2,12 +2,16 @@ import datetime
 import paho.mqtt.client as mqtt
 import paramiko
 from pymediainfo import MediaInfo
+from omxplayer.player import OMXPlayer
 
 host = '192.168.1.23'
 ssh = paramiko.SSHClient()
 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 ssh.connect(host, username='pi', password = 'cntgfyrbpbv')
 sftp = ssh.open_sftp()
+
+# dirty fucking trick to have player instance
+player = OMXPlayer('/home/pi/fulgur_intro.mp4', pause=True)
 
 def process_video(client, userdata, message):
     file_name = str(message.payload, 'utf-8')
@@ -17,6 +21,9 @@ def process_video(client, userdata, message):
     # reading video duration
     info = MediaInfo.parse(file_name)
     print("Downloaded {0} with duration {1}".format(file_name, datetime.timedelta(milliseconds=info.tracks[0].duration)))
+
+    # play video
+    player.load(file_name)
 
 # set up MQTT communication
 client = mqtt.Client("box")
