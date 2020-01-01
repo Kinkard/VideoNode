@@ -34,7 +34,7 @@ class DownloadVerbose:
         self.prev_time = time
 
 def download_file(file_name):
-    if os.path.isfile(cwd + splash_video):
+    if os.path.isfile(cwd + file_name):
         sftp_size = sftp.stat('/' + file_name).st_size
         file_size = os.stat(cwd + file_name).st_size
         if file_size == sftp_size:
