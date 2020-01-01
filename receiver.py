@@ -9,7 +9,7 @@ splash_video = 'splash.mov'
 cwd = '/home/pi/Video/' # current working directory (last '/' is required)
 host = '192.168.1.23'
 
-if not os.exists(cwd):
+if not os.path.exists(cwd):
     os.mkdir(cwd)
 
 ssh = paramiko.SSHClient()
