@@ -5,7 +5,7 @@ import paramiko
 from pymediainfo import MediaInfo
 from omxplayer.player import OMXPlayer
 
-splash_video = 'fulgur_intro.mp4'
+splash_video = 'splash.mov'
 cwd = '/home/pi/Video/' # current working directory (last '/' is required)
 host = '192.168.1.23'
 
