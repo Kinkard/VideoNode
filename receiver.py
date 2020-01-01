@@ -63,6 +63,7 @@ client = mqtt.Client("box")
 
 # register all callbacks during initialisation
 client.message_callback_add("device/video", process_video)
+client.reconnect_delay_set(min_delay=1, max_delay=30)
 
 client.connect(host)
 client.subscribe("device/#", 2)
