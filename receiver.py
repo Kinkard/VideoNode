@@ -19,10 +19,6 @@ ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 ssh.connect(host, username='pi', password = 'cntgfyrbpbv')
 sftp = ssh.open_sftp()
 
-# dirty fucking trick to have player instance (impossible to create empty player instace)
-download_file(splash_video)
-player = OMXPlayer(cwd + splash_video, pause=True)
-
 class DownloadVerbose:
     def __init__(self):
         self.prev_downloaded = 0
@@ -46,7 +42,7 @@ def download_file(file_name):
 
     print("Download video {0}".format(file_name))
     sftp.get('/' + file_name, cwd + file_name, callback=DownloadVerbose())
-    
+
 def process_video(client, userdata, message):
     file_name = str(message.payload, 'utf-8')
     download_file(file_name)
@@ -57,6 +53,10 @@ def process_video(client, userdata, message):
 
     # play video
     player.load(cwd + file_name)
+
+# dirty fucking trick to have player instance (impossible to create empty player instace)
+download_file(splash_video)
+player = OMXPlayer(cwd + splash_video, pause=True)
 
 # set up MQTT communication
 client = mqtt.Client("box")
