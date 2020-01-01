@@ -9,7 +9,7 @@ splash_video = 'fulgur_intro.mp4'
 cwd = '/home/pi/Video/' # current working directory (last '/' is required)
 host = '192.168.1.23'
 
-if !os.exists(cwd):
+if not os.exists(cwd):
     os.mkdir(cwd)
 
 ssh = paramiko.SSHClient()
@@ -17,7 +17,7 @@ ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 ssh.connect(host, username='pi', password = 'cntgfyrbpbv')
 sftp = ssh.open_sftp()
 
-if !os.path.isfile(cwd + splash_video):
+if not os.path.isfile(cwd + splash_video):
     sftp.get('/' + splash_video, cwd + splash_video)
 
 # dirty fucking trick to have player instance (impossible to create empty player instace)
